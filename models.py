@@ -28,6 +28,11 @@ class BlogPost(db.Model):
   published = db.DateTimeProperty()
   updated = db.DateTimeProperty(auto_now=False)
   deps = aetycoon.PickleProperty()
+  
+  author = db.StringProperty()
+  recipients = db.StringListProperty()
+  cc = db.StringListProperty()
+  bcc = db.StringListProperty()
 
   @aetycoon.TransformProperty(tags)
   def normalized_tags(tags):

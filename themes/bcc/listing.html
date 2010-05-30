@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block title %}{{config.blog_name}}{% endblock %}
+{% block head %}
+<script type="text/javascript" src="/static/bcc/js/formatting.js"></script> 
+{% endblock %}
+{% block body %}
+  <table class="menu-list">
+    <tr><th>From</th><th>Subject</th><th>Date Sent</th></tr>
+  {% for post in posts %}
+    <tr>
+      <td>{{post.author}}</td>
+      <td><a href="{{config.url_prefix}}{{post.path}}">{{post.title|escape}}</a></td>
+      <td>{{post.published|date:"n/d/Y h:i:s A"}}</td>
+    </tr>
+  {% endfor %}
+  </table>
+  {% if prev_page %}
+    <a id="prev" href="{{config.url_prefix}}{{prev_page}}">Newer</a>
+  {% endif %}
+  {% if next_page %}
+    <a id="next" href="{{config.url_prefix}}{{next_page}}">Older</a>
+  {% endif %}
+  <div id="main">
+  {% for post in posts %}
+  <!--N.B. Most of this template section is copied verbatim from post.html. Please forgive me. -->
+  <div class="header-fields">
+    <span class="header">Subject:</span> <span class="headertext subject"><a href="{{config.url_prefix}}{{post.path}}">{{post.title|escape}}</a></span>
+    <br />
+  <span class="header">From:</span> <span class="headertext"><a href="mailto:{{post.author}}">{{post.author}}</a></span>
+  <br />
+  <span class="header">Date:</span> <span class="headertext">{{post.published|date:"n/d/Y h:i:s A"}}</span>
+  {% if post.recipients %}
+  	<span class="header">To:</span> <span class="headertext">
+  		{% for recipient in post.recipients %}
+  			{{recipient}}{% if not forloop.last %},{% endif %}
+  		{% endfor %}
+  	</span>
+  {% endif %}
+  {% if post.cc %}
+  	<span class="header">Cc:</span> <span class="headertext">
+  		{% for recipient in post.cc %}
+  			{{recipient}}{% if not forloop.last %},{% endif %}
+  		{% endfor %}
+  	</span>
+  {% endif %}
+  	<span class="header">Bcc:</span> <span class="headertext">
+  		{% if post.bcc %}
+  			{% for recipient in post.bcc %}
+  				{{recipient}},
+  			{% endfor %}
+  		{% endif %}	
+  		<a href="http://bcc.npdoty.name/">http://bcc.npdoty.name/</a>
+  	</span>
+  </div>
+  <hr />
+  <div class="rendered">
+    {{post.rendered}}
+  </div>
+    <p class="post-info">
+      {% if post.tags %}
+  		Labels: 
+  		{% for tag in post.tag_pairs %}
+          <a href="{{config.url_prefix}}/tag/{{tag.1|escape}}">{{tag.0|escape}}</a>{% if not forloop.last %},{% endif %}
+        {% endfor %}
+      {% endif %}
+    </p>
+  {% if not forloop.last %}<hr />{% endif %}
+  {% endfor %}
+  </div>
+  {% if config.disqus_forum %}
+    <script type="text/javascript">
+    //<![CDATA[
+    (function() {
+      var links = document.getElementsByTagName('a');
+      var query = '?';
+      for(var i = 0; i < links.length; i++) {
+      if(links[i].href.indexOf('#disqus_thread') >= 0) {
+        query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+      }
+      }
+      document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/{{config.disqus_forum}}/get_num_replies.js' + query + '"></' + 'script>');
+    })();
+    //]]>
+    </script>
+  {% endif %}
+{% endblock %}

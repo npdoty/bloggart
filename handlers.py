@@ -23,11 +23,14 @@ class PostForm(djangoforms.ModelForm):
       'cols': 20}))
   body_markup = forms.ChoiceField(
     choices=[(k, v[0]) for k, v in markup.MARKUP_MAP.iteritems()])
-  tags = forms.CharField(widget=forms.Textarea(attrs={'rows': 5, 'cols': 20}))
+  tags = forms.CharField(widget=forms.Textarea(attrs={'rows': 5, 'cols': 20}), required=False)
+  recipients = forms.CharField(widget=forms.Textarea(attrs={'rows': 5, 'cols': 20}), required=False)
+  cc = forms.CharField(widget=forms.Textarea(attrs={'rows': 5, 'cols': 20}), required=False)
+  bcc = forms.CharField(widget=forms.Textarea(attrs={'rows': 5, 'cols': 20}), required=False)
   draft = forms.BooleanField(required=False)
   class Meta:
     model = models.BlogPost
-    fields = [ 'title', 'body', 'tags' ]
+    fields = ['author', 'title', 'body', 'tags', 'recipients', 'cc', 'bcc' ]
 
 
 def with_post(fun):

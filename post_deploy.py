@@ -46,7 +46,7 @@ def generate_static_pages(pages):
 post_deploy_tasks.append(generate_static_pages([
     ('/search', 'search.html', True),
     ('/cse.xml', 'cse.xml', False),
-    ('/robots.txt', 'robots.txt', False),
+    ('/robots.txt', 'robots.txt', False)
 ]))
 
 

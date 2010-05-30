@@ -1,41 +1,41 @@
 # Name of the blog
-blog_name = 'My Blog'
+blog_name = 'Bcc'
 
 # Your name (used for copyright info)
-author_name = 'the author'
+author_name = 'Nick Doty'
 
 # (Optional) slogan
-slogan = 'This is my blog'
+slogan = 'A blog consisting of emails <a href="http://npdoty.name" rel="me">I\'ve</a> sent that might be of general interest.'
 
 # The hostname this site will primarially serve off (used for Atom feeds)
-host = 'localhost:8080'
+host = 'bcc.npdoty.name'
 
 # Selects the theme to use. Theme names correspond to directories under
 # the 'themes' directory, containing templates and static content.
-theme = 'default'
+theme = 'bcc'
 
 # Defines the URL organization to use for blog postings. Valid substitutions:
 #   slug - the identifier for the post, derived from the title
 #   year - the year the post was published in
 #   month - the month the post was published in
 #   day - the day the post was published in
-post_path_format = '/%(year)d/%(month)02d/%(slug)s'
+post_path_format = '/%(slug)s'
 
 # A nested list of sidebar menus, for convenience. If this isn't versatile
 # enough, you can edit themes/default/base.html instead.
 sidebars = [
-  ('Blogroll', [
-    ('Nick Johnson', 'http://blog.notdot.net/'),
-    ('Bill Katz', 'http://www.billkatz.com/'),
-    ('Coding Horror', 'http://www.codinghorror.com/blog/'),
-    ('Craphound', 'http://craphound.com/'),
-    ('Neopythonic', 'http://www.neopythonic.blogspot.com/'),
-    ('Schneier on Security', 'http://www.schneier.com/blog/'),
-  ]),
+  # ('Blogroll', [
+  #   ('Nick Johnson', 'http://blog.notdot.net/'),
+  #   ('Bill Katz', 'http://www.billkatz.com/'),
+  #   ('Coding Horror', 'http://www.codinghorror.com/blog/'),
+  #   ('Craphound', 'http://craphound.com/'),
+  #   ('Neopythonic', 'http://www.neopythonic.blogspot.com/'),
+  #   ('Schneier on Security', 'http://www.schneier.com/blog/'),
+  # ]),
 ]
 
 # Number of entries per page in indexes.
-posts_per_page = 10
+posts_per_page = 5
 
 # The mime type to serve HTML files as.
 html_mime_type = "text/html; charset=utf-8"
@@ -48,14 +48,16 @@ disqus_forum = None
 summary_length = 200
 
 # If you want to use Google Analytics, enter your 'web property id' here
-analytics_id = None
+analytics_id = 'UA-7375818-1'
 
 # If you want to use PubSubHubbub, supply the hub URL to use here.
-hubbub_hub_url = 'http://pubsubhubbub.appspot.com/'
+# hubbub_hub_url = 'http://pubsubhubbub.appspot.com/'
+hubbub_hub_url = None
+
 
 # If you want to ping Google Sitemap when your sitemap is generated change this to True, else False
 # see: http://www.google.com/support/webmasters/bin/answer.py?hl=en&answer=34609 for more information
-google_sitemap_ping = True
+google_sitemap_ping = False
 
 # If you want to use Google Site verification, go to 
 # https://www.google.com/webmasters/tools/ , add your site, choose the 'upload
@@ -79,4 +81,4 @@ url_prefix = ''
 
 # Defines where the user is defined in the rel="me" of your pages.
 # This allows you to expand on your social graph.
-rel_me = None
+rel_me = 'http://npdoty.name'

@@ -20,10 +20,11 @@
         <updated>{{post.updated|date:"Y-m-d\TH:i:s\Z"}}</updated>
         <published>{{post.published|date:"Y-m-d\TH:i:s\Z"}}</published>
         <author>
-            <name>{{config.author_name}}</name>
+            <name>{{post.author}}</name>
             <uri>http://{{config.host}}{{config.url_prefix}}/</uri>
         </author>
         <content type="html">
+						<!-- TODO: Render other fields in a reasonable way here, as in post.html -->
             {{post.rendered|escape}}
         </content>
     </entry>

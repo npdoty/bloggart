@@ -1,4 +1,7 @@
-/* @override http://localhost:8097/static/bcc/css/screen.css */
+/* @override 
+	http://localhost:8097/static/bcc/css/screen.css
+	http://bcc.npdoty.name/static/bcc/css/screen.css
+*/
 
 body {
 	background: #fff;
@@ -38,6 +41,7 @@ span.header {
 	text-align: right;
 	width: 50px;
 	padding-right: 8px;
+	clear: both;
 }
 
 span.headertext {
@@ -107,6 +111,9 @@ table.menu-list {
 	border-collapse: collapse;
 	#border-right: 1px solid silver;
 	border-bottom: 1px solid silver;
+	margin-left: 0;
+	padding-left: 0;
+	table-layout: fixed;
 }
 
 table.menu-list th {
@@ -119,10 +126,20 @@ table.menu-list th {
 	font-style: normal;
 }
 
+table.menu-list th:nth-child(2) {
+	width:  41%;
+}
+table.menu-list th:nth-child(1) {
+	width:  32%;
+}
+
 table.menu-list td {
 	padding-right: 5px;
 	padding-left: 3px;
 	padding-bottom: 3px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 table.menu-list tr:hover {
@@ -144,6 +161,16 @@ table.menu-list tr.selected:hover {
 table.menu-list tr.selected a {
 	color: white;
 	text-decoration: none;
+}
+
+#prev, #next {
+	display: block;
+	float: right;
+	font-size: 10px;
+	border: 1px solid silver;
+	border-collapse: collapse;
+	padding: 2px 3px;
+	border-top: none;
 }
 
 /* Header
@@ -180,15 +207,14 @@ div#nav li a {
 	vertical-align: top;
 }
 
-form#quick-search {
+form#cse-search-box {
 	width: 100%;
-	#border: 1px solid red;
 }
 
-form#quick-search input.tbox {
+form#cse-search-box input#q {
 	width: 90px;
 }
-form#quick-search input.btn {
+form#cse-search-box input#sa {
 	width: 50px;
 }
 
@@ -246,6 +272,7 @@ div#main {
 
 #main div {
 	line-height: 1.4em;
+	clear: both;
 }
 
 p.post-footer {

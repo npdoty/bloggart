@@ -10,7 +10,7 @@
     <tr>
       <td>{{post.author}}</td>
       <td><a href="{{config.url_prefix}}{{post.path}}">{{post.title|escape}}</a></td>
-      <td>{{post.published|date:"n/d/Y h:i:s A"}}</td>
+      <td>{{post.date_sent|date:"n/d/Y h:i:s A"}}</td>
     </tr>
   {% endfor %}
   </table>
@@ -28,7 +28,7 @@
     <br />
   <span class="header">From:</span> <span class="headertext"><a href="mailto:{{post.author}}">{{post.author}}</a></span>
   <br />
-  <span class="header">Date:</span> <span class="headertext">{{post.published|date:"n/d/Y h:i:s A"}}</span>
+  <span class="header">Date:</span> <span class="headertext">{{post.date_sent|date:"n/d/Y h:i:s A"}}</span>
   {% if post.recipients %}
   	<span class="header">To:</span> <span class="headertext">
   		{% for recipient in post.recipients %}

@@ -30,7 +30,7 @@ class PostForm(djangoforms.ModelForm):
   draft = forms.BooleanField(required=False)
   class Meta:
     model = models.BlogPost
-    fields = ['author', 'title', 'body', 'tags', 'recipients', 'cc', 'bcc' ]
+    fields = ['author', 'title', 'body', 'tags', 'recipients', 'cc', 'bcc', 'date_sent' ]
 
 
 def with_post(fun):

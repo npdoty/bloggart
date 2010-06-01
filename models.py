@@ -1,4 +1,4 @@
-import aetycoon
+from lib import aetycoon
 import hashlib
 import re
 from google.appengine.ext import db
@@ -33,6 +33,7 @@ class BlogPost(db.Model):
   recipients = db.StringListProperty()
   cc = db.StringListProperty()
   bcc = db.StringListProperty()
+  date_sent = db.DateTimeProperty()
 
   @aetycoon.TransformProperty(tags)
   def normalized_tags(tags):

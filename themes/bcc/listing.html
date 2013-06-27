@@ -32,21 +32,21 @@
   {% if post.recipients %}
   	<span class="header">To:</span> <span class="headertext">
   		{% for recipient in post.recipients %}
-  			{{recipient}}{% if not forloop.last %},{% endif %}
+  			{{recipient|safe}}{% if not forloop.last %},{% endif %}
   		{% endfor %}
   	</span>
   {% endif %}
   {% if post.cc %}
   	<span class="header">Cc:</span> <span class="headertext">
   		{% for recipient in post.cc %}
-  			{{recipient}}{% if not forloop.last %},{% endif %}
+  			{{recipient|safe}}{% if not forloop.last %},{% endif %}
   		{% endfor %}
   	</span>
   {% endif %}
   	<span class="header">Bcc:</span> <span class="headertext">
   		{% if post.bcc %}
   			{% for recipient in post.bcc %}
-  				{{recipient}},
+  				{{recipient|safe}},
   			{% endfor %}
   		{% endif %}	
   		<a href="http://bcc.npdoty.name/">http://bcc.npdoty.name/</a>
@@ -54,7 +54,7 @@
   </div>
   <hr />
   <div class="rendered">
-    {{post.rendered}}
+    {{post.rendered|safe}}
   </div>
     <p class="post-info">
       {% if post.tags %}

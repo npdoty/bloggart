@@ -1,39 +1,39 @@
 {% extends "base.html" %}
 {% block title %}{{post.title|escape}} - {{config.blog_name}}{% endblock %}
 {% block body %}
-<div id="main">
+<div id="main" class="h-entry">
 <div class="header-fields">
-  <span class="header">Subject:</span> <span class="headertext subject">{{post.title|escape}}</span>
+  <span class="header">Subject:</span> <span class="headertext subject p-name"><a href="{{post.path}}" rel="permalink" class="u-url">{{post.title|escape}}</a></span>
   <br />
-<span class="header">From:</span> <span class="headertext"><a href="mailto:{{post.author}}">{{post.author}}</a></span>
+<span class="header">From:</span> <span class="headertext h-card p-author"><a href="mailto:{{post.author}}" class="u-email">{{post.author}}</a></span>
 <br />
-<span class="header">Date:</span> <span class="headertext">{{post.date_sent|date:"n/d/Y h:i:s A"}}</span>
+<span class="header">Date:</span> <span class="headertext"><time datetime="{{post.date_sent|date:"c"}}">{{post.date_sent|date:"n/d/Y h:i:s A"}}</time></span>
 {% if post.recipients %}
 	<span class="header">To:</span> <span class="headertext">
 		{% for recipient in post.recipients %}
-			{{recipient}}{% if not forloop.last %},{% endif %}
+			{{recipient|safe}}{% if not forloop.last %},{% endif %}
 		{% endfor %}
 	</span>
 {% endif %}
 {% if post.cc %}
 	<span class="header">Cc:</span> <span class="headertext">
 		{% for recipient in post.cc %}
-			{{recipient}}{% if not forloop.last %},{% endif %}
+			{{recipient|safe}}{% if not forloop.last %},{% endif %}
 		{% endfor %}
 	</span>
 {% endif %}
 	<span class="header">Bcc:</span> <span class="headertext">
 		{% if post.bcc %}
 			{% for recipient in post.bcc %}
-				{{recipient}},
+				{{recipient|safe}},
 			{% endfor %}
 		{% endif %}	
 		<a href="http://bcc.npdoty.name/">http://bcc.npdoty.name/</a>
 	</span>
 </div>
 <hr />
-<div class="rendered">
-  {{post.rendered}}
+<div class="rendered e-content">
+  {{post.rendered|safe}}
 </div>
   <p class="post-info">
     {% if post.tags %}

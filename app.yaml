@@ -1,7 +1,8 @@
-application: bcc-blog
+application: bccblog2
 version: live
-runtime: python
+runtime: python27
 api_version: 1
+threadsafe: no
 
 handlers:
 - url: /remote_api
@@ -22,3 +23,11 @@ handlers:
 
 - url: /.*
   script: static.py
+
+libraries:
+- name: django
+  version: "1.2"
+
+
+env_variables:
+  DJANGO_SETTINGS_MODULE: 'settings'

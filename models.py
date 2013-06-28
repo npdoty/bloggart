@@ -3,6 +3,7 @@ import hashlib
 import re
 from google.appengine.ext import db
 from google.appengine.ext import deferred
+from google.appengine.api import urlfetch
 
 import config
 import generators
@@ -10,6 +11,8 @@ import markup
 import static
 import utils
 
+import BeautifulSoup
+import logging
 
 if config.default_markup in markup.MARKUP_MAP:
   DEFAULT_MARKUP = config.default_markup
@@ -77,6 +80,8 @@ class BlogPost(db.Model):
       # Force regenerate on new publish. Also helps with generation of
       # chronologically previous and next page.
       regenerate = True 
+      
+      deferred.defer(self.mention)  # after publishing for the first time, try to ping sites you mention
     if not self.deps:
       self.deps = {}
     for generator_class, deps in self.get_deps(regenerate=regenerate):
@@ -86,6 +91,36 @@ class BlogPost(db.Model):
         else:
           generator_class.generate_resource(self, dep)
     self.put()
+  
+  def mention(self):
+    if not self.path:
+      return
+    else:
+      full_path = 'http://%s%s' % (config.host, self.path)
+    if self.body_markup != 'html':
+      return  # currently only works if the writing is done in HTML, I believe, a needless limitation
+    
+    soup = BeautifulSoup.BeautifulSoup(self.body)
+    any_match = re.compile('.*')
+    anchors = soup.findAll('a', attrs={'href':any_match})
+    for a in anchors:
+      href = a.get('href')
+      # TODO: make sure it's an absolutely addressable href
+      logging.info('Beginning process to mention href: %s' % href)
+      response = urlfetch.fetch(href, method=urlfetch.GET)
+      if response.status_code == 200:
+        r_soup = BeautifulSoup.BeautifulSoup(response.content)
+        endpoints = r_soup.findAll('link', attrs={'rel':'http://webmention.org/'})
+        if len(endpoints) > 0:
+          endpoint = endpoints[0].get('href')
+          logging.info('Found endpoint %s and initiating a mention' % endpoint)
+          mention_response = urlfetch.fetch(endpoint, method=urlfetch.POST, payload={'source':full_path, 'target':href})
+          if mention_response.status_code == 202:
+            # WebMention was received successfully!
+            logging.info('Mention was accepted.')
+            logging.info(mention_response.content)
+          else:
+            logging.error(mention_response.content)
 
   def remove(self):
     if not self.is_saved():   

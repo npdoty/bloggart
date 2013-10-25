@@ -52,7 +52,7 @@ def render_template(template_name, template_vals=None, theme=None):
   #old_settings = _swap_settings({'TEMPLATE_DIRS': TEMPLATE_DIRS})
   try:
     tpl = loader.get_template(template_name)
-    rendered = str(tpl.render(template.Context(template_vals)))
+    rendered = tpl.render(template.Context(template_vals)).encode('utf-8')
   finally:
     pass
   #  _swap_settings(old_settings)

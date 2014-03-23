@@ -9,7 +9,7 @@ body {
 	text-align: center;
 	color: #333;
 	font: 10pt "Lucida Grande", Lucida, Verdana, sans-serif;
-	width: 650px;
+	width: 821px;
 	text-align: left;
 	float: left;
 		background: url(/static/bcc/images/background.png) repeat-y;
@@ -47,7 +47,7 @@ span.header {
 span.headertext {
 	display: block;
 	float: left;
-	width: 411px;
+	width: 582px;
 }
 
 span.headertext a {
@@ -226,7 +226,7 @@ form#cse-search-box input#sa {
 }
 
 #content-outer {
-	width: 479px;
+	width: 650px;
 	border-left: 1px solid silver;
 	float: left;
 }
@@ -239,11 +239,12 @@ form#cse-search-box input#sa {
 ----------------------------------------------- */
 
 h2 {
-	margin: 1.5em 0 .75em;
-	font: 78%/1.4em "Lucida Grande", Lucida, Verdana, sans-serif;
-	text-transform: uppercase;
-	letter-spacing: .2em;
-	color: #999;
+  font-style: italic;
+  font-size: 100%;
+}
+
+h2:before {
+  content: "## "; /* emulates the way I write emails with markdown style headers */
 }
 
 hr {

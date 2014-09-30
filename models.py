@@ -11,14 +11,18 @@ import markup
 import static
 import utils
 
-import BeautifulSoup
+from bs4 import BeautifulSoup
 import logging
+from webmentiontools.send import WebmentionSend
+import urlparse
 
 if config.default_markup in markup.MARKUP_MAP:
   DEFAULT_MARKUP = config.default_markup
 else:
   DEFAULT_MARKUP = 'html'
 
+def is_absolute(url):
+  return bool(urlparse.urlparse(url).netloc)
 
 class BlogPost(db.Model):
   # The URL path to the blog post. Posts have a path iff they are published.
@@ -96,31 +100,26 @@ class BlogPost(db.Model):
     if not self.path:
       return
     else:
-      full_path = 'http://%s%s' % (config.host, self.path)
+      full_path = 'http://%s%s' % (config.host, self.path) # TODO: don't hardcode scheme, what about https?
     if self.body_markup != 'html':
-      return  # currently only works if the writing is done in HTML, I believe, a needless limitation
+      return  # currently only works if the writing is done in HTML, I believe, a needless limitation, should instead wait until it's rendered
     
     soup = BeautifulSoup.BeautifulSoup(self.body)
     any_match = re.compile('.*')
     anchors = soup.findAll('a', attrs={'href':any_match})
     for a in anchors:
       href = a.get('href')
-      # TODO: make sure it's an absolutely addressable href
-      logging.info('Beginning process to mention href: %s' % href)
-      response = urlfetch.fetch(href, method=urlfetch.GET)
-      if response.status_code == 200:
-        r_soup = BeautifulSoup.BeautifulSoup(response.content)
-        endpoints = r_soup.findAll('link', attrs={'rel':'http://webmention.org/'})
-        if len(endpoints) > 0:
-          endpoint = endpoints[0].get('href')
-          logging.info('Found endpoint %s and initiating a mention' % endpoint)
-          mention_response = urlfetch.fetch(endpoint, method=urlfetch.POST, payload={'source':full_path, 'target':href})
-          if mention_response.status_code == 202:
-            # WebMention was received successfully!
-            logging.info('Mention was accepted.')
-            logging.info(mention_response.content)
-          else:
-            logging.error(mention_response.content)
+      
+      if not is_absolute(href):
+        continue
+      
+      mention = WebmentionSend(full_path, href)
+      success = mention.send()
+      
+      if success:
+        logging.info('Mention of %s was accepted.' % href)
+      else:
+        logging.info('Mention of %s was not accepted.' % href)
 
   def remove(self):
     if not self.is_saved():   

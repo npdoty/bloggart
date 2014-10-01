@@ -1,3 +1,5 @@
+import secrets
+
 # Name of the blog
 blog_name = 'Bcc'
 
@@ -5,7 +7,7 @@ blog_name = 'Bcc'
 author_name = 'Nick Doty'
 
 # (Optional) slogan
-slogan = 'A blog consisting of emails <a href="http://npdoty.name" rel="me">I\'ve</a> sent that might be of general interest.'
+slogan = 'An email blog from <a href="https://npdoty.name" rel="me">Nick Doty</a>.'
 
 # The hostname this site will primarially serve off (used for Atom feeds)
 host = 'bcc.npdoty.name'
@@ -81,4 +83,4 @@ url_prefix = ''
 
 # Defines where the user is defined in the rel="me" of your pages.
 # This allows you to expand on your social graph.
-rel_me = 'http://npdoty.name'
+rel_me = 'https://npdoty.name'

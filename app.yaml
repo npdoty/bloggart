@@ -27,6 +27,8 @@ handlers:
 libraries:
 - name: django
   version: "1.2"
+- name: ssl 
+  version: latest
 
 
 env_variables:

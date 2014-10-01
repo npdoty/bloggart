@@ -104,7 +104,7 @@ class BlogPost(db.Model):
     if self.body_markup != 'html':
       return  # currently only works if the writing is done in HTML, I believe, a needless limitation, should instead wait until it's rendered
     
-    soup = BeautifulSoup.BeautifulSoup(self.body)
+    soup = BeautifulSoup(self.body)
     any_match = re.compile('.*')
     anchors = soup.findAll('a', attrs={'href':any_match})
     for a in anchors:

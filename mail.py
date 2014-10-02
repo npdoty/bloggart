@@ -5,6 +5,7 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 import config
 import models
 import urllib
+from dateutil.parser import *
 
 class DraftMessageHandler(InboundMailHandler):
   def receive(self, mail_message):
@@ -17,6 +18,15 @@ class DraftMessageHandler(InboundMailHandler):
 
     content_type, body = mail_message.bodies().next()
     
+    post = models.BlogPost(body=unicode(body.decode()), 
+                    title=mail_message.subject, 
+                    author=mail_message.sender,
+                    date_sent=parse(mail_message.date),
+                    recipients=mail_message.to.split(','))
+    if mail_message.cc:
+      post.cc = mail_message.cc.split(',')
+    
+    post.put()
 
 application = webapp2.WSGIApplication([DraftMessageHandler.mapping()], debug=True)
 

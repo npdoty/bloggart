@@ -23,8 +23,10 @@ class DraftMessageHandler(InboundMailHandler):
                     author=mail_message.sender,
                     date_sent=parse(mail_message.date),
                     recipients=mail_message.to.split(','))
-    if mail_message.cc:
+    try:
       post.cc = mail_message.cc.split(',')
+    except AttributeError:
+      pass
     
     post.put()
 

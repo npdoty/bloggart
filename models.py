@@ -41,6 +41,7 @@ class BlogPost(db.Model):
   cc = db.StringListProperty()
   bcc = db.StringListProperty()
   date_sent = db.DateTimeProperty()
+  headers = db.StringProperty()
 
   @aetycoon.TransformProperty(tags)
   def normalized_tags(tags):

@@ -16,6 +16,8 @@ import logging
 from webmentiontools.send import WebmentionSend
 import urlparse
 
+from django.utils import simplejson
+
 if config.default_markup in markup.MARKUP_MAP:
   DEFAULT_MARKUP = config.default_markup
 else:
@@ -70,6 +72,14 @@ class BlogPost(db.Model):
   def summary_hash(self):
     val = (self.title, self.summary, self.tags, self.published)
     return hashlib.sha1(str(val)).hexdigest()
+  
+  @property
+  def custom_headers(self):
+    all_headers = simplejson.loads(self.headers)
+    simplified_headers = [x for x in all_headers if 'placeholder' not in x]
+    if len(simplified_headers) > 0:
+      return simplified_headers
+    return None
   
   def publish(self):
     regenerate = False

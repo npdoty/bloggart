@@ -22,6 +22,18 @@
 		{% endfor %}
 	</span>
 {% endif %}
+{% if post.custom_headers %}
+{% for header in post.custom_headers %}
+{% for header_name, header_value in header.items %}
+<span class="header">
+  {{ header_name|safe }}:
+</span>
+<span class="headertext">
+  {{ header_value|safe}}
+</span>
+{% endfor %}
+{% endfor %}
+{% endif %}
 	<span class="header">Bcc:</span> <span class="headertext">
 		{% if post.bcc %}
 			{% for recipient in post.bcc %}

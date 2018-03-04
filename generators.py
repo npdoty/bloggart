@@ -138,7 +138,7 @@ class PostPrevNextContentGenerator(PostContentGenerator):
      template_vals['next']=next
     rendered = utils.render_template("post.html", template_vals)
     static.set(post.path, rendered, config.html_mime_type)
-generator_list.append(PostPrevNextContentGenerator)
+#generator_list.append(PostPrevNextContentGenerator)
 
 class ListingContentGenerator(ContentGenerator):
   path = None

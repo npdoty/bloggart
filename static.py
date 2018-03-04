@@ -76,16 +76,17 @@ def set(path, body, content_type, indexed=True, **kwargs):
       **kwargs)
   content.put()
   memcache.replace(path, db.model_to_protobuf(content).Encode())
-  try:
-    now = datetime.datetime.now().replace(second=0, microsecond=0)
-    eta = now.replace(second=0, microsecond=0) + datetime.timedelta(seconds=65)
-    if indexed:
-      deferred.defer(
-          utils._regenerate_sitemap,
-          _name='sitemap-%s' % (now.strftime('%Y%m%d%H%M'),),
-          _eta=eta)
-  except (taskqueue.taskqueue.TaskAlreadyExistsError, taskqueue.taskqueue.TombstonedTaskError), e:
-    pass
+  # BUG: regenerating sitemaps fails for large sites, so currently this functionality is removed
+  # try:
+  #   now = datetime.datetime.now().replace(second=0, microsecond=0)
+  #   eta = now.replace(second=0, microsecond=0) + datetime.timedelta(seconds=65)
+  #   # if indexed:
+  #   #   deferred.defer(
+  #   #       utils._regenerate_sitemap,
+  #   #       _name='sitemap-%s' % (now.strftime('%Y%m%d%H%M'),),
+  #   #       _eta=eta)
+  # except (taskqueue.taskqueue.TaskAlreadyExistsError, taskqueue.taskqueue.TombstonedTaskError), e:
+  #   pass
   return content
 
 def add(path, body, content_type, indexed=True, **kwargs):

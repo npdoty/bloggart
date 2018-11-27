@@ -94,7 +94,9 @@ class JsonPairInputs(Widget):
                 if len(key) > 0:
                     twotuple.append({key: value}) 
             jsontext = simplejson.dumps(twotuple) 
-        return jsontext
+            return jsontext
+        else:
+            return None
 
 # '[{"a":"b"},{"c":"d"}]'
 
